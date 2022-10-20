@@ -59,6 +59,9 @@
     margin: 0;
     width: 100%;
   }
+  #reload {
+   margin: 0 auto;
+  }
   
   @media (max-width: 440px) {
     button { margin-top: 5px; }

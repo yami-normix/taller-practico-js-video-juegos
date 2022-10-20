@@ -32,22 +32,26 @@ let enemyPositions = [];
 
 window.addEventListener('load', setCanvasSize);
 window.addEventListener('resize', setCanvasSize)
+window.addEventListener('click', reload);
 
+function reload(){
+    location.reload()
+}
 
 function setCanvasSize () {
     if(window.innerHeight > window.innerWidth) {
-        canvasSize = window.innerWidth * 0.;
+        canvasSize = window.innerWidth * 0.7;
     } else {
         canvasSize = window.innerHeight * 0.7;
     }
 
-    // canvasSize = Number(canvasSize.toFixed(0))
+    //canvasSize = Number(canvasSize.toFixed(0))
     canvas.setAttribute('width', canvasSize)
     canvas.setAttribute('height', canvasSize)
-     elementsSize = (canvasSize / 10);
+     elementsSize = (canvasSize / 10) - 1;
 
-     playerPosition.x = undefined;
-     playerPosition.y = undefined;
+      playerPosition.x = undefined;
+      playerPosition.y = undefined;
      startGame();
     
 }
@@ -146,13 +150,13 @@ function levelFail() {
         lives = 3;
         timeStart = undefined;
     } 
-    playerPosition.x = undefined;
-    playerPosition.y = undefined;
+    // playerPosition.x = undefined;
+    // playerPosition.y = undefined;
     startGame();
 }
 
 function gameWin() {
-    console.log('¡Terminaste el juego!');
+
     clearInterval(timeInterval)
     //
     const recordTime = localStorage.getItem('record_time')
