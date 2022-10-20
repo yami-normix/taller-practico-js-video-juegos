@@ -9,6 +9,7 @@ const spanLives = document.querySelector('#lives')
 const spanTime = document.querySelector('#time')
 const spanRecord = document.querySelector('#record')
 const pResult = document.querySelector('#result')
+const buttonReload = document.querySelector('#reload')
 
 let canvasSize;
 let elementsSize;
@@ -31,8 +32,8 @@ const giftPosition = {
 let enemyPositions = [];
 
 window.addEventListener('load', setCanvasSize);
-window.addEventListener('resize', setCanvasSize)
-window.addEventListener('click', reload);
+window.addEventListener('resize', setCanvasSize);
+buttonReload.addEventListener('click', reload);
 
 function reload(){
     location.reload()
@@ -48,10 +49,16 @@ function setCanvasSize () {
     //canvasSize = Number(canvasSize.toFixed(0))
     canvas.setAttribute('width', canvasSize)
     canvas.setAttribute('height', canvasSize)
-     elementsSize = (canvasSize / 10) - 1;
+    elementsSize = (canvasSize / 10) - 1;
 
       playerPosition.x = undefined;
       playerPosition.y = undefined;
+
+    //   const resizeScreen = window.addEventListener('resize', reload);
+    //   if(resizeScreen) {
+    //     reload
+    //   }
+      
      startGame();
     
 }
@@ -247,3 +254,7 @@ function moveDown() {
         startGame();
     }
 }
+
+function fixNumber(n) {
+    return Number(n.toFixed(0));
+  }
