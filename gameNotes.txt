@@ -1,0 +1,83 @@
+//Obteniendo por el selector de id game
+const canvas = document.querySelector("#game")
+//Obteniendo el contexto 2d
+const game = canvas.getContext("2d");
+//Tamanio del canvas
+let canvasSize;
+//Tamanio de los elementos dentro del canvas
+let elementsSize;
+
+//Esperando a que cargue todo el html para llamar a la función de establecer el tamanio del canvas
+window.addEventListener('load', setCanvasSize);
+//Si hacemos resize, llamaremos siempre a la función del tamanio del canvas para que sea responsive en todos los tamanios
+window.addEventListener('resize', setCanvasSize)
+
+//Función para establecer el tamanio del canvas
+function setCanvasSize () {
+    //Si la altura del html es más grande que el ancho entonces mi canvas tomará el ancho como medida, pero de ese
+    //Tomará solo un 80%
+    if(window.innerHeight > window.innerWidth) {
+        canvasSize = window.innerWidth * 0.8;
+        //Caso contrario tomará al height, esto con el fin de que siempre sea un cuadrado
+    } else {
+        canvasSize = window.innerHeight * 0.8;
+    }
+
+//Le pasamos a canvas como atributo width nuestro canvasSize
+    canvas.setAttribute('width', canvasSize)
+//Le pasamos a canvas como atributo height nuestro canvasSize
+    canvas.setAttribute('height', canvasSize)
+//Nuestros elementos serán igual al tamanio del canvas / 10. De esta forma creamos la grilla de 10
+     elementsSize = (canvasSize / 10);
+
+//Llamamos a la función para iniciar el juego
+     startGame();
+    
+}
+function startGame() {
+    console.log({canvasSize, elementsSize})
+//El tamanio de fuente será el tamanio de los elementos, restandole 4 para que mi regalo ni mi puerta topen con las bombas
+    game.font = elementsSize - 4 + 'px Verdana'
+//Debo alinear los elementos al final   
+    game.textAlign = 'end';
+
+    //Accediendo al primer arreglo de maps
+    const map = maps[1];
+    //Convirtiendo en array a map por cada \n que haya
+    //mapRows para obtener las filas del mapa sin espacios al inicio y separados por cada \n
+    const mapRows = map.trim().split('\n');
+    //Creando un nuevo array con map porque ya es un arreglo, luego limpiamos los espacios
+    //Dividimos a cada letra como posiciones de array.
+    //Ahora tendremos un array que tiene filas y columnas
+    const mapRowCols = mapRows.map(row => row.trim().split(''));
+    console.log({map, mapRows, mapRowCols});
+
+//Recorremos al array que tiene filas y columnas, para eso lo anidamos con 2 forEach
+    mapRowCols.forEach((row, rowI) => {
+        row.forEach((col, colI) => {
+            //Obtenemos la columna
+          const emoji = emojis[col];
+          //El tamanio de nuestros elementos será multiplicado por el indice de la columna y se le sumará uno para que no inicie en cero sino en uno
+          const posX = elementsSize * (colI + 1);
+          //Hacemos lo mismo con las filas
+          const posY = elementsSize * (rowI + 1);
+         //Nuestro texto del canvas será, lo que hay en emojis[col], y le paso las posiciones de X y Y que ya habia definido
+          game.fillText(emoji, posX, posY)
+            
+        })
+    })
+
+    // for (let row = 1; row <= 10; row++) {
+    //     for (let col = 1; col <=10; col++) {
+    //         //Entrando al array multidimensional, pasandole la fila y la columna restandoles 1 a cada uno
+    //         //Porque en el ciclo for iniciamos en 1, pero como tenemos text-align end, queremos restarle 1 para que inicie desde la posición [0][0]
+    //         game.fillText(emojis[mapRowCols[row - 1][col -1]], 
+    //             elementsSize * col , elementsSize * row);
+            
+    //     }
+       
+        
+        
+    // }
+
+}
